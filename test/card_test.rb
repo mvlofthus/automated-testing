@@ -26,6 +26,14 @@ describe Card do
     it "to_s returns a readable String value logically for values 2-10" do
       # Test to ensure that to_s works for cards values 2-10
       # for example:  "2 of diamonds"
+      #Act
+      card_two_of_diamonds = Card.new(2, :diamonds)
+      card_four_of_clubs = Card.new(4, :clubs)
+
+      #Assert
+      expect (card_two_of_diamonds.to_s).must_equal "2 of diamonds"
+      expect (card_four_of_clubs.to_s).must_equal "4 of clubs"
+
     end
 
     it "to_s returns a readable String value for Ace, Jack, Queen, King" do
@@ -35,11 +43,24 @@ describe Card do
       # Write the test, see it fail, then modify to_s to make it pass!
       # (Consider writing a helper method!)
       #
-      # For reference:
-      #  1: Ace
-      #  11: Jack
-      #  12: Queen
-      #  13: King
+      face_cards = {
+       1 => "Ace",
+       11 => "Jack",
+       12 => "Queen",
+       13 => "King"
+      }
+
+      face_cards.each do |number, royal|
+        card = Card.new(number, :diamonds)
+
+        expect(card.to_s).must_equal "#{royal} of diamonds"
+      end
+
+      # card_king_of_hearts = Card.new(13, :hearts)
+      # card_jack_of_spades = Card.new(11, :spades)
+      #
+      # expect (card_king_of_hearts.to_s).must_equal "King of hearts"
+      # expect (card_jack_of_spades.to_s).must_equal "Jack of spades"
     end
   end
 
@@ -47,11 +68,22 @@ describe Card do
 
     it "Can retrieve the value of the card using a `.value`." do
       # ensure that `.value works as expected`
+      [:hearts, :spades, :clubs, :diamonds].each do |suit|
+        (1..13).each do |value|
+          card = Card.new(value, suit)
+          expect(card.value).must_equal value
+        end
+      end
     end
 
     it "Can retrieve the value of the card using a `.suit`." do
       # ensure that `.suit works as expected returning the symbol of the suit`
-
+      [:hearts, :spades, :clubs, :diamonds].each do |suit|
+        (1..13).each do |value|
+          card = Card.new(value, suit)
+          expect(card.suit).must_equal suit
+        end
+      end
     end
   end
 
